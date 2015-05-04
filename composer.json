@@ -1,0 +1,33 @@
+{
+    "name": "hidekscorporation/hideksframework2",
+    "description": "Hideks Framework 2",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "framework",
+        "hideks"
+    ],
+    "homepage": "http://framework.hidekscorp.com/",
+    "authors": [
+        {
+            "name": "Wesckley Uno",
+            "email": "wesckley.uno@hidekscorp.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/http-foundation": "2.6.*",
+        "symfony/routing": "2.6.*",
+        "symfony/http-kernel": "2.6.*",
+        "symfony/event-dispatcher": "2.6.*",
+        "symfony/dependency-injection": "2.6.*",
+        "symfony/yaml": "2.6.*",
+        "twig/twig": "1.18.*",
+        "php-activerecord/php-activerecord": "1.1.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Hideks\\": "src/Hideks/"
+        }
+    }
+}

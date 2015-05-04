@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hideks Framework</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="robots" content="noindex, nofollow">
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="//cdn.hidekscorp.com/stylesheets/exception/v2/application.min.css">
+    </head>
+    <body id="exception">
+        <header class="container hf-header hf-border-left hf-border-right">
+            <h1>Hideks Framework</h1>
+        </header>
+        <section class="container hf-section">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Error</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="jumbotron hf-jumbotron">
+                        <h1>Ops!! ({{ status_code }})</h1>
+                        <p>{{ message }}</p>
+                    </div>
+                    <ul class="list-group hf-list-group">
+                        <li class="list-group-item">
+                            <p class="hf-no-margin-bottom"><strong>File: </strong>{{ file }}</p>
+                        </li>
+                        <li class="list-group-item">
+                            <p class="hf-no-margin-bottom"><strong>Line: </strong>{{ line }}</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Trace Route</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="panel panel-default hf-no-margin-bottom">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Function</th>
+                                        <th>File</th>
+                                        <th>Line</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for route in trace %}
+                                        <tr>
+                                            <td>{{ loop.revindex }}</td>
+                                            <td>{{ route.function }}</td>
+                                            <td>{{ route.file }}</td>
+                                            <td>{{ route.line }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td>#</td>
+                                        <td>Function</td>
+                                        <td>File</td>
+                                        <td>Line</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer class="container hf-footer hf-border-left hf-border-right">
+            <p class="hf-no-margin-bottom">Powered by <a href="http://hidekscorp.com" target="_blank"><strong>Hideks Corporation</strong></a></p>
+        </footer>
+        <script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdn.hidekscorp.com/javascripts/exception/application.min.js"></script>
+    </body>
+</html>
