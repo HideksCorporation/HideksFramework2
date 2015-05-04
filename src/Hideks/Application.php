@@ -21,7 +21,7 @@ class Application
             || define('DS', DIRECTORY_SEPARATOR);
         
         defined('APP_DIR')
-            || define('APP_DIR', dirname(dirname(__DIR__)).DS.'application');
+            || define('APP_DIR', dirname(dirname(dirname(dirname(dirname(__DIR__))))).DS.'application');
         
         $this->request = Request::createFromGlobals();
         
