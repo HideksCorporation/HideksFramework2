@@ -11,15 +11,18 @@ class Controller
 {
     
     protected $container;
+    protected $view;
 
     public function __construct()
     {
         $this->container = Container::getInstance();
+        
+        $this->view = new View();
     }
     
-    public function renderTo($view, array $parameters, Response $response)
+    public function renderTo($view, Response $response)
     {
-        $response->setContent($this->container->get('twig')->render("$view.twig", $parameters));
+        $response->setContent($this->container->get('twig')->render("$view.twig", $this->view->getVariables()));
         
         return $response;
     }

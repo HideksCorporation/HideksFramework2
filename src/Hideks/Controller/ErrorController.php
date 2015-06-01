@@ -11,13 +11,17 @@ class ErrorController extends Controller
     
     public function exceptionAction(FlattenException $exception)
     {
-        return $this->renderTo('@HideksFramework/exception', array(
-            'status_code' => $exception->getStatusCode(),
-            'message'     => $exception->getMessage(),
-            'file'        => $this->getShortFileName($exception->getFile()),
-            'line'        => $exception->getLine(),
-            'trace'       => $this->parseTrace($exception->getTrace())
-        ), new Response());
+        $this->view->status_code = $exception->getStatusCode();
+        
+        $this->view->message = $exception->getMessage();
+        
+        $this->view->file = $this->getShortFileName($exception->getFile());
+        
+        $this->view->line = $exception->getLine();
+        
+        $this->view->trace = $this->parseTrace($exception->getTrace());
+        
+        return $this->renderTo('@HideksFramework/exception.html', new Response());
     }
     
     private function parseTrace($trace)
