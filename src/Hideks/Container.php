@@ -60,7 +60,8 @@ class Container
                 'debug' => '%twig.debug%',
                 'cache' => '%twig.cache%'
             )))
-            ->addMethodCall('addExtension', array(new Reference('twig.extension.link_to')));
+            ->addMethodCall('addExtension', array(new Reference('twig.extension.link_to')))
+            ->addMethodCall('addExtension', array(new \Twig_Extension_Debug));
         
         return $container;
     }
