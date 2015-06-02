@@ -45,8 +45,14 @@ class Application
         $collection = new RouteCollection();
         
         foreach($routes as $name => $options){
+            $parts = explode(':',$options['defaults']['_controller']);
+            
+            $options['defaults'] = array(
+                '_controller' => "{$parts[0]}\\Controllers\\{$parts[1]}Controller::{$parts[2]}Action"
+            );
+            
             $route = new Route($options['path']);
-            $route->setDefaults(isset($options['defaults']) ? $options['defaults'] : array());
+            $route->setDefaults($options['defaults']);
             $route->setRequirements(isset($options['requirements']) ? $options['requirements'] : array());
             $route->setOptions(isset($options['options']) ? $options['options'] : array());
             $route->setHost(isset($options['host']) ? $options['host'] : '');
