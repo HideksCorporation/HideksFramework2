@@ -62,7 +62,8 @@ class Application
         
         /* Composer ClassLoader - Begin */
         $composer_loader = new ClassLoader();
-        $composer_loader->addPsr4($params['namespace'].'\\', APP_DIR.DS.'layers');
+        $composer_loader->addPsr4($params['namespace'].'\\Controllers\\', APP_DIR.DS.'layers'.DS.'controllers');
+        $composer_loader->addPsr4($params['namespace'].'\\Models\\', APP_DIR.DS.'layers'.DS.'models');
         $composer_loader->register();
         /* Composer ClassLoader - End */
         
