@@ -127,7 +127,7 @@ final class Paginator {
     }
     
     private function is_route($route) {
-        if(empty($this->router->get($route))){
+        if(is_null($this->router->get($route))){
             throw new Exception(sprintf('Unable to generate a URL for the named route "%s" as such route does not exist.', $route));
         }
         
