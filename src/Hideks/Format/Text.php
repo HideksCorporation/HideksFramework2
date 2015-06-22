@@ -2,7 +2,7 @@
 
 namespace Hideks\Format;
 
-class String {
+class Text {
     
     private $string = null;
 

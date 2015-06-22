@@ -11,7 +11,7 @@ class Format {
             throw new \Exception('The argument passed to string() must be a string!!');
         }
         
-        return new Format\String($string);
+        return new Format\Text($string);
     }
     
     public static function objects($objects) {
