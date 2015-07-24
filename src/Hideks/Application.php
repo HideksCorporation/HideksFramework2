@@ -95,7 +95,7 @@ class Application
         
         /* Twig configuration setup - Begin */
         $this->container->setParameter('twig.debug', $isDev);
-        $this->container->setParameter('twig.cache', $isDev ? false : APP_DIR.DS.'cache'.DS.'templates');
+        $this->container->setParameter('twig.cache', $isDev ? false : APP_DIR.DS.'cache'.DS.'twig');
         
         $twig_loader = $this->container->get('twig.loader');
         $twig_loader->addPath(APP_DIR.DS.'layers'.DS.'views');
