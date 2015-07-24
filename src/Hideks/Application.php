@@ -10,33 +10,33 @@ use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Yaml\Parser;
 use Composer\Autoload\ClassLoader;
+use Assetic\FilterManager;
+use Assetic\Filter\CssMinFilter;
+use Assetic\Filter\LessphpFilter;
+use Assetic\Filter\JSMinFilter;
+use Assetic\Factory\AssetFactory;
+use Assetic\Factory\Worker\CacheBustingWorker;
 
 class Application
 {
+    
     private $request;
+    private $container;
 
     public function __construct()
     {
-        defined('DS')
-            || define('DS', DIRECTORY_SEPARATOR);
-        
-        defined('APP_DIR')
-            || define('APP_DIR', dirname(dirname(dirname(dirname(dirname(__DIR__))))).DS.'application');
-        
         $this->request = Request::createFromGlobals();
         
-        $container = Container::getInstance();
+        $this->container = Container::getInstance();
         
         /* Parse params file - Begin */
         $params = $this->parseYamlFile(APP_DIR.DS.'configs'.DS.'params.yml');
         
         $isDev = $params['environment'] === 'development';
         
-        if($isDev){ Debug::enable(); }
+        if($isDev){ Debug::enable(E_STRICT); }
         
         date_default_timezone_set($params['timezone']);
-        
-        $container->setParameter('params', $params);
         /* Parse params file - End */
         
         /* Parse routes file - Begin */
@@ -63,27 +63,41 @@ class Application
             $collection->add($name, $route);
         }
         
-        $container->setParameter('routes', $collection);
+        $this->container->setParameter('routes', $collection);
         /* Parse routes file - End */
         
         /* Composer ClassLoader - Begin */
         $composer_loader = new ClassLoader();
-        $composer_loader->addPsr4($params['namespace'].'\\Controllers\\', APP_DIR.DS.'layers'.DS.'controllers');
-        $composer_loader->addPsr4($params['namespace'].'\\Models\\', APP_DIR.DS.'layers'.DS.'models');
+        $composer_loader->addPsr4('Application\\Controllers\\', APP_DIR.DS.'layers'.DS.'controllers');
+        $composer_loader->addPsr4('Application\\Models\\', APP_DIR.DS.'layers'.DS.'models');
         $composer_loader->register();
         /* Composer ClassLoader - End */
         
         /* Set error controller - Begin */
-        $namespace = $isDev ? 'Hideks\\Controller\\' : $params['namespace'].'\\Controllers\\';
+        $namespace = $isDev ? 'Hideks\\Controller\\' : 'Application\\Controllers\\';
         
-        $container->setParameter('exception.controller', $namespace.'ErrorController::exceptionAction');
+        $this->container->setParameter('exception.controller', $namespace.'ErrorController::exceptionAction');
         /* Set error controller - End */
         
-        /* Twig configuration setup - Begin */
-        $container->setParameter('twig.debug', $isDev);
-        $container->setParameter('twig.cache', $isDev ? false : APP_DIR.DS.'cache');
+        /* Assetic configuration setup - Begin */
+        $filter_manager = new FilterManager();
+        $filter_manager->set('css_min', new CssMinFilter());
+        $filter_manager->set('lessphp', new LessphpFilter());
+        $filter_manager->set('js_min', new JSMinFilter());
         
-        $twig_loader = $container->get('twig.loader');
+        $asset_factory = new AssetFactory(APP_DIR.DS.'assets'.DS);
+        $asset_factory->setDebug($isDev);
+        $asset_factory->setFilterManager($filter_manager);
+        $asset_factory->addWorker(new CacheBustingWorker());
+        
+        $this->container->setParameter('assetic.factory', $asset_factory);
+        /* Assetic configuration setup - End */
+        
+        /* Twig configuration setup - Begin */
+        $this->container->setParameter('twig.debug', $isDev);
+        $this->container->setParameter('twig.cache', $isDev ? false : APP_DIR.DS.'cache'.DS.'templates');
+        
+        $twig_loader = $this->container->get('twig.loader');
         $twig_loader->addPath(APP_DIR.DS.'layers'.DS.'views');
         /* Twig configuration setup - End */
         

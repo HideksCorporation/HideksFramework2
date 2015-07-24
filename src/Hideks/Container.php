@@ -48,8 +48,10 @@ class Container
             ->addMethodCall('addSubscriber', array(new Reference('listener.response')))
             ->addMethodCall('addSubscriber', array(new Reference('listener.exception')));
         
-        // Twig - Custom Extension
+        // Twig - Extensions
         $container->register('twig.extension.link_to', 'Hideks\Twig\Extension\LinkToExtension');
+        $container->register('twig.extension.assetic', 'Hideks\Twig\Extension\AsseticExtension')
+            ->setArguments(array('%assetic.factory%'));
         
         // Twig - Template Engine
         $container->register('twig.loader', 'Twig_Loader_Filesystem')
@@ -61,7 +63,11 @@ class Container
                 'cache' => '%twig.cache%'
             )))
             ->addMethodCall('addExtension', array(new Reference('twig.extension.link_to')))
+            ->addMethodCall('addExtension', array(new Reference('twig.extension.assetic')))
             ->addMethodCall('addExtension', array(new \Twig_Extension_Debug));
+        
+        // Assetic - Asset Manager
+        $container->register('asset_collection', 'Assetic\Asset\AssetCollection');
         
         return $container;
     }
