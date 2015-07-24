@@ -3,7 +3,6 @@
 namespace Hideks\Controller;
 
 use Hideks\Controller;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Debug\Exception\FlattenException;
 
 class ErrorController extends Controller
@@ -21,7 +20,7 @@ class ErrorController extends Controller
         
         $this->view->trace = $this->parseTrace($exception->getTrace());
         
-        return $this->renderTo('@HideksFramework/exception.html', new Response());
+        return $this->renderTo('@HideksFramework/exception.html');
     }
     
     private function parseTrace($trace)

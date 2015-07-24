@@ -20,8 +20,9 @@ class Controller
         $this->view = new View();
     }
     
-    public function renderTo($view, Response $response)
+    public function renderTo($view)
     {
+        $response = new Response();
         $response->setContent($this->container->get('twig')->render("$view.twig", $this->view->getVariables()));
         
         return $response;
