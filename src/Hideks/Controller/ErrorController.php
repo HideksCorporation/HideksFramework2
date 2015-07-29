@@ -20,7 +20,7 @@ class ErrorController extends Controller
         
         $this->view->trace = $this->parseTrace($exception->getTrace());
         
-        return $this->renderTo('@HideksFramework/exception.html');
+        return $this->renderTo('@HideksFramework/templates/exception.html');
     }
     
     private function parseTrace($trace)

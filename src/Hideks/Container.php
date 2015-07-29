@@ -55,7 +55,7 @@ class Container
         
         // Twig - Template Engine
         $container->register('twig.loader', 'Twig_Loader_Filesystem')
-            ->addMethodCall('addPath', array(__DIR__.DS.'View'.DS.'templates', 'HideksFramework'));
+            ->addMethodCall('addPath', array(__DIR__.DS.'View', 'HideksFramework'));
         
         $container->register('twig', 'Twig_Environment')
             ->setArguments(array(new Reference('twig.loader'), array(
