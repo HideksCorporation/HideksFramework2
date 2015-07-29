@@ -1,0 +1,61 @@
+<ul class="pagination">
+    {% if pagination.firstPage %}
+        <li>
+            <a href="{{ linkTo(pagination.previous.route, pagination.previous.params) }}" rel="{{ pagination.previous.rel }}">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+        </li>
+    {% else %}
+        <li class="disabled">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </li>
+    {% endif %}
+
+    {% if pagination.firstPage and (pagination.currentPage - 4) > pagination.firstPage %}
+        <li>
+            <a href="{{ linkTo(pagination.first.route, pagination.first.params) }}" rel="{{ pagination.first.rel }}">{{ pagination.first.number }}</a>
+        </li>
+    {% endif %}
+
+    {% if (pagination.currentPage - 4) > (pagination.firstPage + 1) %}
+        <li class="disabled">
+            <span>...</span>
+        </li>
+    {% endif %}
+    
+    {% for page in pagination.pages %}
+        {% if pagination.currentPage == page.number %}
+            <li class="active">
+                <span>{{ page.number }}</span>
+            </li>
+        {% else %}
+            <li>
+                <a href="{{ linkTo(page.route, page.params) }}"{% if page.rel %} rel="{{ page.rel }}"{% endif %}>{{ page.number }}</a>
+            </li>
+        {% endif %}
+    {% endfor %}
+
+    {% if (pagination.currentPage + 4) < (pagination.lastPage - 1) %}
+        <li class="disabled">
+            <span>...</span>
+        </li>
+    {% endif %}
+
+    {% if pagination.lastPage and (pagination.currentPage + 4) < pagination.lastPage %}
+        <li>
+            <a href="{{ linkTo(pagination.last.route, pagination.last.params) }}">{{ pagination.lastPage }}</a>
+        </li>
+    {% endif %}
+
+    {% if pagination.lastPage %}
+        <li>
+            <a href="{{ linkTo(pagination.next.route, pagination.next.params) }}" rel="{{ pagination.next.rel }}">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+        </li>
+    {% else %}
+        <li class="disabled">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+        </li>
+    {% endif %}
+</ul>

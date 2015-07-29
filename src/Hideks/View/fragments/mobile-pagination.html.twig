@@ -1,0 +1,29 @@
+<ul class="pagination">
+    {% if pagination.firstPage %}
+        <li>
+            <a href="{{ linkTo(pagination.previous.route, pagination.previous.params) }}" rel="{{ pagination.previous.rel }}">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+        </li>
+    {% else %}
+        <li class="disabled">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </li>
+    {% endif %}
+    
+    <li class="active">
+        <span>{{ pagination.currentPage }} / {{ pagination.totalPages }}</span>
+    </li>
+    
+    {% if pagination.lastPage %}
+        <li>
+            <a href="{{ linkTo(pagination.next.route, pagination.next.params) }}" rel="{{ pagination.next.rel }}">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+        </li>
+    {% else %}
+        <li class="disabled">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+        </li>
+    {% endif %}
+</ul>

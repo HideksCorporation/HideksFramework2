@@ -52,6 +52,7 @@ class Container
         $container->register('twig.extension.link_to', 'Hideks\Twig\Extension\LinkToExtension');
         $container->register('twig.extension.assetic', 'Hideks\Twig\Extension\AsseticExtension')
             ->setArguments(array('%assetic.factory%'));
+        $container->register('twig.extension.pagination', 'Hideks\Twig\Extension\PaginationExtension');
         
         // Twig - Template Engine
         $container->register('twig.loader', 'Twig_Loader_Filesystem')
@@ -64,6 +65,7 @@ class Container
             )))
             ->addMethodCall('addExtension', array(new Reference('twig.extension.link_to')))
             ->addMethodCall('addExtension', array(new Reference('twig.extension.assetic')))
+            ->addMethodCall('addExtension', array(new Reference('twig.extension.pagination')))
             ->addMethodCall('addExtension', array(new \Twig_Extension_Debug));
         
         // Assetic - Asset Manager
