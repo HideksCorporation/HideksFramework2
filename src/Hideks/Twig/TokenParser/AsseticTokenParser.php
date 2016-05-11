@@ -17,7 +17,7 @@ class AsseticTokenParser extends \Twig_TokenParser
     {
         $this->factory = $factory;
         $this->tag     = $tag;
-        $this->output  = DS.$tag.DS.$output;
+        $this->output  = "/$tag/$output";
     }
 
     public function parse(\Twig_Token $token)
